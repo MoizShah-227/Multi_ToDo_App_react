@@ -27,3 +27,7 @@ body{
  margin-left: 4px;
  margin-right: 4px;   
 }
+.add-btn{
+    position: relative;
+    top: -12px;
+}
