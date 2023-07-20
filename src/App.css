@@ -1,4 +1,5 @@
 body{
+    background-color: #dbdbdb;
     color: white;
 }
 .header{
@@ -22,6 +23,7 @@ body{
 .container input{
     width: 70%;
     height: 40px;
+    background-color: #dbdbdb;
 }
 .container button{
  margin-left: 4px;
