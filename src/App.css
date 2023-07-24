@@ -33,3 +33,9 @@ body{
     position: relative;
     top: -12px;
 }
+.list input{
+    background-color: transparent;
+    color: white;
+    border-color: transparent;
+    border: none;
+}

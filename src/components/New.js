@@ -1,14 +1,11 @@
-import React, { useState } from 'react'
-
+import React, { useEffect, useState } from 'react'
 const Todoform = () => {
-    let contain =[];
     let count=0;
-    let    titleNo =0;
-    let number=1;
-    let array=[1,2,3,4];
-    // const items = ['Item 1', 'Item 2', 'Item 3', 'Item 4', 'Item 5'];       
+    let msg ="Edit";
+    const [isEditing, setIsEditing] = useState(false);
     const [inputtext, setInputtext] = useState('');
     const [print, setPrint] = useState(false);
+    const [items, setItems] = useState(['Item 1', 'Item 2', 'Item 3']);
     const [formData, setFormData] = useState({
         title: '',
          tasks:[
@@ -43,29 +40,28 @@ const Todoform = () => {
         setData(deleteVal)
     }
   
-    console.log(myData)
+    const Delete=(i)=>{
+        const deleteVal = [...myData]
+        deleteVal.splice(i,1)
+        setMyData(deleteVal)
+    }
+    const handleButtonClick = () => {
+        setIsEditing((prevIsEditing) => !prevIsEditing);
+      };
+
+      console.log(myData)
   return (
       <div className='container ' >
         <h4>Title list</h4>
         <form  className="TodoForm" onSubmit={e=>{
         e.preventDefault();
             count=1;
-        // array.map(()=>setFormData({
-            // 
-            // ...formData,
-            setFormData({
-                title: inputtext,
-                tasks: tasklist
-            })
-            
-            contain.push(formData)
-            setMyData([...myData, contain])
+       
+            setMyData([...myData, { title: inputtext, list: tasklist }]);
             
             setInputtext('')
             setTasklist('')
-            
-            // }))
-            
+     
             
                 }}>
             <input type="text"  value={inputtext} onChange={(e) => setInputtext(e.target.value)}className="todo-input" placeholder='Enter Task Title' />
@@ -91,19 +87,15 @@ const Todoform = () => {
 
         
         <div className='list'>
-        {/* <h4>{formData?.titleNo}{formData?.title}</h4> */}
-            
-            {/* {conatin.push(formData.title)}; */}
-            {/* {console.log(conatin)} */}
-            {/* {number=number+1}; */}
-            {/* {console.log(formData.title)} */}
-            {/* <h5>{formData?.number}{formData?.list}</h5> */}
             {myData.map((dat,index) => {
                 return (
                     <>
-                <h2>{index}:{dat[0].title}</h2>
-                <p>{index}{dat[0].list}</p>
-                <button>edit</button><button>Dlt</button>
+                    <br/>
+                <input  className='showBox' type='text' value={dat.title} readOnly></input>
+                <input className='showBox' type='text' value={dat.list} readOnly></input><br/>
+                <button onClick={handleButtonClick} className='btn btn-primary'> {isEditing ? 'Save' : 'Edit'}</button><button className='btn btn-danger'
+                onClick={() => Delete(index)}
+                >Delete</button>
                 </>
             )})}
         </div>             
