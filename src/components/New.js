@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 
 const Todoform = () => {
+    let contain =[];
+    let count=0;
     let    titleNo =0;
     let number=1;
     let array=[1,2,3,4];
@@ -22,6 +24,7 @@ const Todoform = () => {
         
          ]
      });
+     const [myData, setMyData] = useState([])
        
      
         //MULTIINPUT CODE
@@ -39,29 +42,34 @@ const Todoform = () => {
         deleteVal.splice(i,1)
         setData(deleteVal)
     }
-   function show(){
-    setPrint(true);
-    }
+  
+    console.log(myData)
   return (
-      <div className='container ' onSubmit={e=>{
-        e.preventDefault();
-
-        array.map(()=>setFormData({
-            
-            ...formData,
-            title: inputtext,
-            titleNo: titleNo+1,
-            list:tasklist,
-            number:number+1
-
-        }))
-        
-        
-    }}>
+      <div className='container ' >
         <h4>Title list</h4>
-        <form  className="TodoForm">
+        <form  className="TodoForm" onSubmit={e=>{
+        e.preventDefault();
+            count=1;
+        // array.map(()=>setFormData({
+            // 
+            // ...formData,
+            setFormData({
+                title: inputtext,
+                tasks: tasklist
+            })
+            
+            contain.push(formData)
+            setMyData([...myData, contain])
+            
+            setInputtext('')
+            setTasklist('')
+            
+            // }))
+            
+            
+                }}>
             <input type="text"  value={inputtext} onChange={(e) => setInputtext(e.target.value)}className="todo-input" placeholder='Enter Task Title' />
-            <button type="submit" onClick={()=>show} className='mt-3 btn btn-primary add-btn'>ADD</button>
+            <button type='submit' className='mt-3 btn btn-primary add-btn'>ADD</button>
          </form>
      
      <h4 className='mt-2'>Task List </h4>
@@ -83,9 +91,21 @@ const Todoform = () => {
 
         
         <div className='list'>
-        <h4>{formData?.titleNo}{formData?.title}</h4>
-
-            <h5>{formData?.number}{formData?.list}</h5>
+        {/* <h4>{formData?.titleNo}{formData?.title}</h4> */}
+            
+            {/* {conatin.push(formData.title)}; */}
+            {/* {console.log(conatin)} */}
+            {/* {number=number+1}; */}
+            {/* {console.log(formData.title)} */}
+            {/* <h5>{formData?.number}{formData?.list}</h5> */}
+            {myData.map((dat,index) => {
+                return (
+                    <>
+                <h2>{index}:{dat[0].title}</h2>
+                <p>{index}{dat[0].list}</p>
+                <button>edit</button><button>Dlt</button>
+                </>
+            )})}
         </div>             
      </div>       
     

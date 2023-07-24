@@ -1,36 +1,113 @@
-import React, { useState } from "react";
+import React, { useState } from 'react'
 
-function DynamicTwoInput(){
-    const [data,setData]=useState([{}])
-   
+const Todoform = () => {
+    let contain =[];
+    let    titleNo =0;
+    let number=1;
+    let array=[1,2,3,4];
+    // const items = ['Item 1', 'Item 2', 'Item 3', 'Item 4', 'Item 5'];       
+    const [inputtext, setInputtext] = useState('');
+    const [print, setPrint] = useState(false);
+    const [formData, setFormData] = useState({
+        title: '',
+         tasks:[
+             {
+                 task:'',
+                 id: new Date(),
+                 isCompleted:false,
+            
+                 list:'',
+                    id :new Date(),
+                    isCompleted: false,  
+            }
+        
+         ]
+     });
+     const [myData, setMyData] = useState([])
+       
+     
+        //MULTIINPUT CODE
+    const [data,setData]=useState([{}]);
+    const [tasklist, setTasklist] =useState([]);
+    
+
+
     const handleClick=()=>{
-        setData([...data,{fname:"",}])
+        setData([...data,{}]);
     }
-    const handleChange=(e,i)=>{
-        const {name,value}=e.target
-        const onchangeVal = [...data]
-        onchangeVal[i][name]=value
-        setData(onchangeVal)
-    }
+    
     const handleDelete=(i)=>{
         const deleteVal = [...data]
         deleteVal.splice(i,1)
         setData(deleteVal)
     }
-    return(
-        <div className="App">
-                    {
+  
+    console.log(myData)
+  return (
+      <div className='container ' >
+        <h4>Title list</h4>
+        <form  className="TodoForm" onSubmit={e=>{
+        e.preventDefault();
+        
+        // array.map(()=>setFormData({
+            // 
+            // ...formData,
+            setFormData({
+                title: inputtext,
+                tasks: tasklist
+            })
+            console.log(contain)
+            contain.push(formData)
+            setMyData([...myData, contain])
+            
+            setInputtext('')
+            
+            
+            // }))
+            
+            
+                }}>
+            <input type="text"  value={inputtext} onChange={(e) => setInputtext(e.target.value)}className="todo-input" placeholder='Enter Task Title' />
+            <button type='submit' className='mt-3 btn btn-primary add-btn'>ADD</button>
+         </form>
+     
+     <h4 className='mt-2'>Task List </h4>
+     <div className="App">
+            {
+                <>{
                 data.map((val,i)=>
                 <div>
-                    <input name="fname" value={val.fname} onChange={(e)=>handleChange(e,i)} />
-                    <button onClick={handleClick}>Add</button>
-                    <button onClick={()=>handleDelete(i)}>Delete</button>
+                    <input name='info' placeholder='Enter task'  value={tasklist[val]}  onChange={(e)=> setTasklist(e.target.value)}/>
+                    <button onClick={handleClick} className='btn btn-primary'>+</button><button className='btn-primary btn' onClick={()=>handleDelete(i)}>-</button>
                 </div>
                 )
+        
             }
-            <p>{JSON.stringify(data)}</p>
-            {/* <p>{data}</p> */}
+                </>
+            }
         </div>
-    )
+       
+
+        
+        <div className='list'>
+        {/* <h4>{formData?.titleNo}{formData?.title}</h4> */}
+            
+            {/* {conatin.push(formData.title)}; */}
+            {/* {console.log(conatin)} */}
+            {/* {number=number+1}; */}
+            {/* {console.log(formData.title)} */}
+            {/* <h5>{formData?.number}{formData?.list}</h5> */}
+            {myData.map((dat) => {
+                return (
+                    <>
+                <h2>{dat[0].title}</h2>
+                <p>{dat[0].list}</p>
+                </>
+            )})}
+        </div>             
+     </div>       
+    
+);
 }
-export default DynamicTwoInput;
+
+export default Todoform 

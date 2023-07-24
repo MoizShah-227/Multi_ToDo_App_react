@@ -21,6 +21,7 @@ const Todoform = () => {
          ]
      });
        
+     const [tasks,setTasks] = useState([])
      
         //MULTIINPUT CODE
     const [data,setData]=useState([{}]);
@@ -36,6 +37,7 @@ const Todoform = () => {
         deleteVal.splice(i,1)
         setData(deleteVal)
     }
+    
   return (
       <div className='container ' onSubmit={e=>{
         e.preventDefault();
@@ -47,11 +49,19 @@ const Todoform = () => {
             number:number+1
                     
         })
-        setTasklist(' ')
+        debugger
+        setTasklist((previousValue)=>previousValue.push({
+            ...formData,
+            title: inputtext,
+            titleNo: titleNo+1,
+            list:tasklist,
+            number:number+1             
+        }))
         setInputtext(' ')
-        array.push(tasklist);
-        console.log(array[0]);
+        
+        console.log();
     }}>
+
         <h4>Title list</h4>
         <form  className="TodoForm">
             <input type="text"  value={inputtext} onChange={(e) => setInputtext(e.target.value)}className="todo-input" placeholder='Enter Task Title' />
@@ -59,12 +69,13 @@ const Todoform = () => {
          </form>
      
      <h4 className='mt-2'>Task List </h4>
+    {JSON.stringify(tasklist)}
      <div className="App">
             {
                 <>{
                 data.map((val,i)=>
                 <div>
-                    <input placeholder='Enter task'  value={tasklist[val]}  onChange={(e)=> setTasklist(e.target.value)}/>
+                    <input placeholder='Enter task'  value={tasklist[val]}  onChange={(e)=> formData.title(e.target.value)}/>
                     <button onClick={handleClick} className='btn btn-primary'>+</button><button className='btn-primary btn' onClick={()=>handleDelete(i)}>-</button>
                 </div>
                 )
@@ -78,7 +89,8 @@ const Todoform = () => {
         
         <div className='list'>
         <h4>{formData?.titleNo}{formData?.title}</h4>
-            <h5>{formData?.number}{formData?.list}</h5>
+        
+        <h5>{formData?.number}{formData?.list}</h5>
             </div>             
      </div>       
     
