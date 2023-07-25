@@ -46,11 +46,20 @@ const Todoform = () => {
         deleteVal.splice(i,1)
         setMyData(deleteVal)
     }
-    const handleButtonClick = () => {
-        setIsEditing((prevIsEditing) => !prevIsEditing);
-        // const editvalue = [...myData]
-        // editvalue.findIndex(i,1)
-        setIsReadonly(prevState => !prevState)
+    const handleButtonClick = (i) => {
+           const editvalue = [...myData]
+            
+           if(isEditing==true){
+            setIsEditing(false)
+        }else{
+            setIsEditing(true)
+        }
+
+        if(isReadonly==true){
+            setIsReadonly(false)
+        }else{
+            setIsReadonly(true)
+        }
     };
     const handleChange = (event) => {
         setInputValue(event.target.value);
