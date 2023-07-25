@@ -3,6 +3,11 @@ const Todoform = () => {
     let count=0;
     const [isEditing, setIsEditing] = useState(false);
     const [inputtext, setInputtext] = useState('');
+    const [inputvalue, setInputValue] = useState('');
+    const [data,setData]=useState([{}]);
+    const [tasklist, setTasklist] =useState([]);
+    
+    const [isReadonly, setIsReadonly] = useState(true);
     const [formData, setFormData] = useState({
         title: '',
          tasks:[
@@ -22,14 +27,11 @@ const Todoform = () => {
        
      
         //MULTIINPUT CODE
-    const [data,setData]=useState([{}]);
-    const [tasklist, setTasklist] =useState([]);
-    const [read, setRead] = useState('readonly');
-
 
 
     const handleClick=()=>{
         setData([...data,{}]);
+       
     }
     
     const handleDelete=(i)=>{
@@ -45,9 +47,13 @@ const Todoform = () => {
     }
     const handleButtonClick = () => {
         setIsEditing((prevIsEditing) => !prevIsEditing);
+        setIsReadonly(prevState => !prevState)
+    };
+    const handleChange = (event) => {
+        setInputValue(event.target.value);
       };
+    
 
-      console.log(myData)
   return (
       <div className='container ' >
         <h4>Title list</h4>
@@ -70,9 +76,7 @@ const Todoform = () => {
      <div className="App">
             {
                 <>{
-                    
-                        
-                    
+                                        
                 data.map((val,i)=>
                 <div>
                     <input name='info' placeholder='Enter task'  value={tasklist[val]}  onChange={(e)=> setTasklist(e.target.value)}/>
@@ -92,14 +96,17 @@ const Todoform = () => {
                 return (
                     <>
                     <br/>
-                <input  className='showBox' type='text' value={dat.title} {...read}></input>
-                <input className='showBox' type='text' value={dat.list} {...read}></input><br/>
+                <input  className='showBox' type='text' readOnly={isReadonly}  defaultValue={dat.title} onChange={handleChange}></input>
+                <input className='showBox' type='text' readOnly={isReadonly}  defaultValue={dat.list} onChange={handleChange} ></input><br/>
+                <div className='have mt-3'>
                 <button onClick={handleButtonClick} className='btn btn-primary'> {isEditing ? 'Save' : 'Edit'}</button><button className='btn btn-danger'
                 onClick={() => Delete(index)}
                 >Delete</button>
+                </div>
                 </>
             )})}
-        </div>             
+        </div>  
+        
      </div>       
     
 );
