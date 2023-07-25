@@ -47,3 +47,11 @@ body{
     font-size: 24px;
     margin-left: 12px;
 }
+.list starice{
+    font-size: 28px;
+}
+ li{
+    display: flex;
+    margin-left: -28px;
+    list-style-type: none;
+}

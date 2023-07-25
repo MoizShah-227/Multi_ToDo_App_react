@@ -5,7 +5,7 @@ const Todoform = () => {
     const [isEditing, setIsEditing] = useState(false);
     const [inputtext, setInputtext] = useState('');
     const [inputvalue, setInputValue] = useState('');
-    const [data,setData]=useState([{}]);
+    const [data,setData]=useState([""]);
     const [tasklist, setTasklist] =useState([]);
     
     const [isReadonly, setIsReadonly] = useState(true);
@@ -31,15 +31,16 @@ const Todoform = () => {
 
 
     const handleClick=()=>{
-        setData([...data,{}]);
+        setData([...data,[]]);  
        
     }
     
     const handleDelete=(i)=>{
-        const deleteVal = [...data]
-        deleteVal.splice(i,1)
-        setData(deleteVal)
-    }
+        console.log(i)
+        let info = [...data];
+        info.splice(i,1)
+        setData(info)
+    }   
   
     const Delete=(i)=>{
         const deleteVal = [...myData]
@@ -47,8 +48,7 @@ const Todoform = () => {
         setMyData(deleteVal)
     }
     const handleButtonClick = (i) => {
-           const editvalue = [...myData]
-            
+           
            if(isEditing==true){
             setIsEditing(false)
         }else{
@@ -76,6 +76,8 @@ const Todoform = () => {
             setMyData([...myData, { title: inputtext, list: tasklist }]);
             
             setInputtext('')
+            console.log(...myData);
+            
         }}>
 
 
@@ -87,22 +89,19 @@ const Todoform = () => {
      <h4 className='mt-2'>Task List </h4>
      <div className="App">
             {
-                <>{
-                                        
-                data.map((val,i)=>
-                <div>
-                    <input name='info' placeholder='Enter task'  value={tasklist[val]}  onChange={(e)=>{
+                <ul>                            
+                {data.map(( val,index)=>
+                    <li key={index}>
+                    <input name='info' placeholder='Enter task'  value={tasklist[val]} onChange={(e)=>{
                         const arr = tasklist;
-                        arr[i] = e?.target?.value;
+                        arr[index] = e?.target?.value;
                         setTasklist(arr)  
                     } 
                       }/>
-                    <button onClick={handleClick} className='btn btn-primary'>+</button><button className='btn-primary btn' onClick={()=>handleDelete(i)}>-</button>
-                </div>
-                )
-                  
-            }
-                </>
+                    <button onClick={handleClick} className='btn btn-primary'>+</button><button className='btn-primary btn' onClick={()=>handleDelete(index)}>-</button>
+                </li>
+                )}
+                </ul>
             }
         </div>
        
@@ -113,7 +112,7 @@ const Todoform = () => {
                 return (
                     <>
                     <br/>
-                <input  className='showBox  diff' type='text' readOnly={isReadonly}  defaultValue={dat.title} onChange={handleChange}></input>
+                <starice>*</starice> <input  className='showBox  diff' type='text' readOnly={isReadonly}  defaultValue={dat.title} onChange={handleChange}></input>
                     
                 {
                     dat?.list?.map((val,i)=><div>
