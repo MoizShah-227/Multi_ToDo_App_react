@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 const Todoform = () => {
     let count=0;
+    const arr =[];
     const [isEditing, setIsEditing] = useState(false);
     const [inputtext, setInputtext] = useState('');
     const [inputvalue, setInputValue] = useState('');
@@ -47,6 +48,8 @@ const Todoform = () => {
     }
     const handleButtonClick = () => {
         setIsEditing((prevIsEditing) => !prevIsEditing);
+        // const editvalue = [...myData]
+        // editvalue.findIndex(i,1)
         setIsReadonly(prevState => !prevState)
     };
     const handleChange = (event) => {
@@ -64,10 +67,10 @@ const Todoform = () => {
             setMyData([...myData, { title: inputtext, list: tasklist }]);
             
             setInputtext('')
-            setTasklist('')
-     
-            
-                }}>
+        }}>
+
+
+
             <input type="text"  value={inputtext} onChange={(e) => setInputtext(e.target.value)}className="todo-input" placeholder='Enter Task Title' />
             <button type='submit' className='mt-3 btn btn-primary add-btn'>ADD</button>
          </form>
@@ -79,11 +82,16 @@ const Todoform = () => {
                                         
                 data.map((val,i)=>
                 <div>
-                    <input name='info' placeholder='Enter task'  value={tasklist[val]}  onChange={(e)=> setTasklist(e.target.value)}/>
+                    <input name='info' placeholder='Enter task'  value={tasklist[val]}  onChange={(e)=>{
+                        const arr = tasklist;
+                        arr[i] = e?.target?.value;
+                        setTasklist(arr)  
+                    } 
+                      }/>
                     <button onClick={handleClick} className='btn btn-primary'>+</button><button className='btn-primary btn' onClick={()=>handleDelete(i)}>-</button>
                 </div>
                 )
-                
+                  
             }
                 </>
             }
@@ -96,10 +104,17 @@ const Todoform = () => {
                 return (
                     <>
                     <br/>
-                <input  className='showBox' type='text' readOnly={isReadonly}  defaultValue={dat.title} onChange={handleChange}></input>
-                <input className='showBox' type='text' readOnly={isReadonly}  defaultValue={dat.list} onChange={handleChange} ></input><br/>
+                <input  className='showBox  diff' type='text' readOnly={isReadonly}  defaultValue={dat.title} onChange={handleChange}></input>
+                    
+                {
+                    dat?.list?.map((val,i)=><div>
+                        <input  className='showBox diff2' type='text' readOnly={isReadonly}  defaultValue={val} onChange={handleChange} ></input><br/>
+                        </div>
+                    )
+                }
+                
                 <div className='have mt-3'>
-                <button onClick={handleButtonClick} className='btn btn-primary'> {isEditing ? 'Save' : 'Edit'}</button><button className='btn btn-danger'
+                <button onClick={()=>handleButtonClick(index)} className='btn btn-primary'> {isEditing ? 'Save' : 'Edit'}</button><button className='btn btn-danger'
                 onClick={() => Delete(index)}
                 >Delete</button>
                 </div>

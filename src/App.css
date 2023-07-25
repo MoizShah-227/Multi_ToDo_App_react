@@ -39,3 +39,11 @@ body{
     border-color: transparent;
     border: none;
 }
+.list .diff{
+    font-size: 30px;
+    font-weight: 600;
+}
+.list .diff2{
+    font-size: 24px;
+    margin-left: 12px;
+}
