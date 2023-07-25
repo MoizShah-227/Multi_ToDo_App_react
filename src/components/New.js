@@ -1,11 +1,8 @@
 import React, { useEffect, useState } from 'react'
 const Todoform = () => {
     let count=0;
-    let msg ="Edit";
     const [isEditing, setIsEditing] = useState(false);
     const [inputtext, setInputtext] = useState('');
-    const [print, setPrint] = useState(false);
-    const [items, setItems] = useState(['Item 1', 'Item 2', 'Item 3']);
     const [formData, setFormData] = useState({
         title: '',
          tasks:[
@@ -27,7 +24,8 @@ const Todoform = () => {
         //MULTIINPUT CODE
     const [data,setData]=useState([{}]);
     const [tasklist, setTasklist] =useState([]);
-    
+    const [read, setRead] = useState('readonly');
+
 
 
     const handleClick=()=>{
@@ -72,13 +70,16 @@ const Todoform = () => {
      <div className="App">
             {
                 <>{
+                    
+                        
+                    
                 data.map((val,i)=>
                 <div>
                     <input name='info' placeholder='Enter task'  value={tasklist[val]}  onChange={(e)=> setTasklist(e.target.value)}/>
                     <button onClick={handleClick} className='btn btn-primary'>+</button><button className='btn-primary btn' onClick={()=>handleDelete(i)}>-</button>
                 </div>
                 )
-        
+                
             }
                 </>
             }
@@ -91,8 +92,8 @@ const Todoform = () => {
                 return (
                     <>
                     <br/>
-                <input  className='showBox' type='text' value={dat.title} readOnly></input>
-                <input className='showBox' type='text' value={dat.list} readOnly></input><br/>
+                <input  className='showBox' type='text' value={dat.title} {...read}></input>
+                <input className='showBox' type='text' value={dat.list} {...read}></input><br/>
                 <button onClick={handleButtonClick} className='btn btn-primary'> {isEditing ? 'Save' : 'Edit'}</button><button className='btn btn-danger'
                 onClick={() => Delete(index)}
                 >Delete</button>
@@ -104,4 +105,4 @@ const Todoform = () => {
 );
 }
 
-export default Todoform 
+export default Todoform     
