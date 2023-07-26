@@ -1,7 +1,9 @@
 
 import React, { useEffect, useState } from 'react'
 const Todoform = () => {
-    const [isEditing, setIsEditing] = useState(false);
+    
+    const [isEditing, setIsEditing] = useState(true);
+    const [editedIndex, setEditedIndex] = useState(null);
     const [inputtext, setInputtext] = useState('');
     const [tasklist, setTasklist] =useState([]);
     const [val,setVal]=useState([]);    
@@ -50,19 +52,10 @@ const Todoform = () => {
                 setMyData(deleteVal)
             }
             const handleButtonClick = (i) => {
-                console.log("edit val is:"+i);
-            
-            if(isEditing==true){
-                setIsEditing(false)
-            }else{
-                setIsEditing(true)
-            }
-
-            if(isReadonly==true){
-                setIsReadonly(false)
-            }else{
-                setIsReadonly(true)
-            }
+                console.log('edit val is:' + i);
+                setIsEditing(!isEditing);
+                setIsReadonly(!isReadonly);
+                setEditedIndex(i);
     };
 
   return (
@@ -118,20 +111,20 @@ const Todoform = () => {
                 return (
                     <>
                     <br/>
-                    <starice>*</starice> <input  className='showBox  diff' type='text' readOnly={isReadonly}  defaultValue={dat.title} onChange={handleChange}></input>
+                    <starice>*</starice> <input  className='showBox  diff' type='text' readOnly={isReadonly || editedIndex !== index}  defaultValue={dat.title} onChange={handleChange}></input>
 
-                    <input  className='showBox  diff2' type='text' readOnly={isReadonly}  defaultValue={tasklist} onChange={handleChange}></input>
+                    <input  className='showBox  diff2' type='text' readOnly={isReadonly || editedIndex !== index}  defaultValue={tasklist} onChange={handleChange}></input>
                     
 
                     {
                         val.map((val,i)=><div>
-                            <input  className='showBox diff2' type='text' readOnly={isReadonly}  defaultValue={val} onChange={handleChange} ></input><br/>
+                            <input  className='showBox diff2' type='text' readOnly={isReadonly || editedIndex !== index}  defaultValue={val} onChange={handleChange} ></input><br/>
                             </div>
                         )
                     }
                     
                     <div key={index} className='have mt-3'>
-                    <button onClick={()=>handleButtonClick(index)} className='btn btn-primary'> {isEditing ? 'Save' : 'Edit'}</button><button className='btn btn-danger'
+                    <button onClick={()=>handleButtonClick(index)} className='btn btn-primary'> {isEditing ?'Edit' : 'Save'}</button><button className='btn btn-danger'
                     onClick={() => Delete(index)}
                     >Delete</button>
                     </div>
