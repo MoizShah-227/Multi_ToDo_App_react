@@ -6,7 +6,7 @@ const Todoform = () => {
     const [isEditing, setIsEditing] = useState(false);
     const [inputtext, setInputtext] = useState('');
     const [inputvalue, setInputValue] = useState('');
-    const [data,setData]=useState([""]);
+    const [data,setData]=useState([[]]);
     const [tasklist, setTasklist] =useState([]);
     
     const [isReadonly, setIsReadonly] = useState(true);
@@ -36,10 +36,15 @@ const Todoform = () => {
        
     }
     
-    const handleDelete=(index)=>{
-        console.log(index);
-        setData(data.filter((o, i) => index !== i));
-    
+    const handleDelete=(id)=>{
+        console.log("id is: "+id);
+        
+        let temp = [...data]
+        temp.splice(id, 1)
+        setData(temp);
+        // console.log(id);
+        // setData(data.filter((o, i) => id !== i));
+        
     }   
   
     const Delete=(i)=>{
@@ -76,6 +81,7 @@ const Todoform = () => {
             setMyData([...myData, { title: inputtext, list: tasklist }]);
             
             setInputtext('')
+            // setData('')
             console.log(...myData);
             
         }}>
@@ -88,21 +94,23 @@ const Todoform = () => {
      
      <h4 className='mt-2'>Task List </h4>
      <div className="App">
-            {
-                <ul>
-                {data.map(( val,id)=>
-                    <li key={id}>
-                    <input name='info' placeholder='Enter task'  value={tasklist[val]} onChange={(e)=>{
+            
+                <div>
+                   
+                    {data.map((val, index)=>
+                    <div key={index}>
+                        <input name='info' placeholder='Enter task'  value={tasklist[val]} onChange={(e)=>{
                         const arr = tasklist;
-                        arr[id] = e?.target?.value;
-                        setTasklist(arr)  
-                    } 
+                        arr[index] = e?.target?.value;
+                        setTasklist(arr)
+                        } 
                       }/>
-                    <button onClick={handleClick} className='btn btn-primary'>+</button><button className='btn-primary btn' onClick={()=>handleDelete(id)}>-</button>
-                </li>
+                        <button onClick={handleClick} className='btn btn-primary'>+</button><button  className='btn-primary btn' onClick={()=>handleDelete(index)}>-</button>
+                    </div>
                 )}
-                </ul>
-            }
+                </div>
+                
+            
         </div>
        
 
@@ -112,21 +120,22 @@ const Todoform = () => {
                 return (
                     <>
                     <br/>
-                <starice>*</starice> <input  className='showBox  diff' type='text' readOnly={isReadonly}  defaultValue={dat.title} onChange={handleChange}></input>
+                    <starice>*</starice> <input  className='showBox  diff' type='text' readOnly={isReadonly}  defaultValue={dat.title} onChange={handleChange}></input>
+                        
+                    {
+                        dat?.list?.map((val,i)=><div>
+                            <input  className='showBox diff2' type='text' readOnly={isReadonly}  defaultValue={val} onChange={handleChange} ></input><br/>
+                            </div>
+                        )
+                    }
                     
-                {
-                    dat?.list?.map((val,i)=><div>
-                        <input  className='showBox diff2' type='text' readOnly={isReadonly}  defaultValue={val} onChange={handleChange} ></input><br/>
-                        </div>
-                    )
-                }
-                
-                <div className='have mt-3'>
-                <button onClick={()=>handleButtonClick(index)} className='btn btn-primary'> {isEditing ? 'Save' : 'Edit'}</button><button className='btn btn-danger'
-                onClick={() => Delete(index)}
-                >Delete</button>
-                </div>
+                    <div key={index} className='have mt-3'>
+                    <button onClick={()=>handleButtonClick(index)} className='btn btn-primary'> {isEditing ? 'Save' : 'Edit'}</button><button className='btn btn-danger'
+                    onClick={() => Delete(index)}
+                    >Delete</button>
+                    </div>
                 </>
+                
             )})}
         </div>  
         

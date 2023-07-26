@@ -1,28 +1,33 @@
-import React, { useState } from 'react';
-
-const DeleteButtonList = () => {
-  // Initialize the state with some example data
-  const [listItems, setListItems] = useState(['Item 1', 'Item 2', 'Item 3']);
-
-  // Function to delete an item from the list
-  const handleDelete = (index) => {
-    const updatedList = [...listItems];
-    updatedList.splice(index, 1);
-    setListItems(updatedList);
-  };
-
-  return (
-    <div>
-      <ul>
-        {listItems.map((item, index) => (
-          <li key={index}>
-            {item}
-            <button onClick={() => handleDelete(index)}>Delete</button>
-          </li>
-        ))}
-      </ul>
-    </div>
-  );
-};
-
-export default DeleteButtonList;
+import React, { useState } from "react";
+function AddDynamicInput(){
+   const [val,setVal]=useState([]);
+   const handleAdd=()=>{
+       const abc=[...val,[]]
+       setVal(abc)
+   }
+   const handleChange=(onChangeValue,i)=>{
+    const inputdata=[...val]
+    inputdata[i]=onChangeValue.target.value;
+    setVal(inputdata)
+   }
+   const handleDelete=(i)=>{
+       const deletVal=[...val]
+       deletVal.splice(i,1)
+       setVal(deletVal)  
+   }
+   console.log(val,"data-")
+return(
+    <>
+    <input onChange={e=>handleChange(e)} /><button onClick={()=>handleAdd()}>Add</button>
+        {val.map((data,i)=>{
+            return(
+               <div>
+                    <input value={data} onChange={e=>handleChange(e,i)} />
+                    <button onClick={()=>handleAdd()}>Add</button><button onClick={()=>handleDelete(i)}>x</button>
+               </div>
+            )
+        })}
+    </>
+);
+}
+export default AddDynamicInput;

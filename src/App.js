@@ -9,8 +9,8 @@ function App() {
    <>
    <Header/>
    {/* <Todoform/> */}
-   <New/>
-   {/* <Old/> */}
+   {/* <New/> */}
+   <Old/>
    {/* <Button/> */}
    </>
   );
