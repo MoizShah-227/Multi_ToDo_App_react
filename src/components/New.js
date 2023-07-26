@@ -1,3 +1,4 @@
+import { DisplaySettings } from '@mui/icons-material';
 import React, { useEffect, useState } from 'react'
 const Todoform = () => {
     let count=0;
@@ -35,11 +36,11 @@ const Todoform = () => {
        
     }
     
-    const handleDelete=(i)=>{
-        console.log(i)
-        let info = [...data];
-        info.splice(i,1)
-        setData(info)
+    const handleDelete=(index)=>{
+        
+        console.log(index);
+        setData(data.filter((_, i) => index !== i));
+    
     }   
   
     const Delete=(i)=>{
@@ -90,15 +91,15 @@ const Todoform = () => {
      <div className="App">
             {
                 <ul>                            
-                {data.map(( val,index)=>
-                    <li key={index}>
+                {data.map(( val,id)=>
+                    <li key={id}>
                     <input name='info' placeholder='Enter task'  value={tasklist[val]} onChange={(e)=>{
                         const arr = tasklist;
-                        arr[index] = e?.target?.value;
+                        arr[id] = e?.target?.value;
                         setTasklist(arr)  
                     } 
                       }/>
-                    <button onClick={handleClick} className='btn btn-primary'>+</button><button className='btn-primary btn' onClick={()=>handleDelete(index)}>-</button>
+                    <button onClick={handleClick} className='btn btn-primary'>+</button><button className='btn-primary btn' onClick={()=>handleDelete(id)}>-</button>
                 </li>
                 )}
                 </ul>
