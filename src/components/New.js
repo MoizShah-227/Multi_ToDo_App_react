@@ -1,4 +1,4 @@
-import { DisplaySettings } from '@mui/icons-material';
+
 import React, { useEffect, useState } from 'react'
 const Todoform = () => {
     let count=0;
@@ -37,9 +37,8 @@ const Todoform = () => {
     }
     
     const handleDelete=(index)=>{
-        
         console.log(index);
-        setData(data.filter((_, i) => index !== i));
+        setData(data.filter((o, i) => index !== i));
     
     }   
   
@@ -90,7 +89,7 @@ const Todoform = () => {
      <h4 className='mt-2'>Task List </h4>
      <div className="App">
             {
-                <ul>                            
+                <ul>
                 {data.map(( val,id)=>
                     <li key={id}>
                     <input name='info' placeholder='Enter task'  value={tasklist[val]} onChange={(e)=>{
