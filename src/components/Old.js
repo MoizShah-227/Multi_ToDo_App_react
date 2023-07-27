@@ -1,7 +1,7 @@
 
 import React, { useEffect, useState } from 'react'
 const Todoform = () => {
-    
+    const contain ='Edit'    
     const [isEditing, setIsEditing] = useState(true);
     const [editedIndex, setEditedIndex] = useState(null);
     const [inputtext, setInputtext] = useState('');
@@ -56,7 +56,8 @@ const Todoform = () => {
                 setIsEditing(!isEditing);
                 setIsReadonly(!isReadonly);
                 setEditedIndex(i);
-    };
+
+            };
 
   return (
       <div className='container ' >
@@ -124,7 +125,7 @@ const Todoform = () => {
                     }
                     
                     <div key={index} className='have mt-3'>
-                    <button onClick={()=>handleButtonClick(index)} className='btn btn-primary'> {isEditing ?'Edit' : 'Save'}</button><button className='btn btn-danger'
+                    <button onClick={()=>handleButtonClick(index)} className='btn btn-primary btn-container'>Edit</button><button className='btn btn-danger'
                     onClick={() => Delete(index)}
                     >Delete</button>
                     </div>
